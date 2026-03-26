@@ -1,0 +1,15 @@
+# Python
+backend/venv/
+backend/__pycache__/
+backend/app/__pycache__/
+backend/app/routers/__pycache__/
+*.pyc
+
+# Environment secrets
+backend/.env
+
+# Node
+notifications/node_modules/
+
+# VS Code
+.vscode/

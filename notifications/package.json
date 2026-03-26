@@ -1,0 +1,17 @@
+{
+  "name": "erp-po-frontend",
+  "version": "1.0.0",
+  "description": "ERP Purchase Order System",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3"
+  }
+}

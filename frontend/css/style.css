@@ -1,0 +1,164 @@
+/* style.css - Custom styles for ERP PO System */
+
+:root {
+  --primary   : #2c3e50;
+  --accent    : #3498db;
+  --success   : #27ae60;
+  --warning   : #f39c12;
+  --danger    : #e74c3c;
+  --light-bg  : #f4f6f9;
+  --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+body {
+  background-color: var(--light-bg);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ── Sidebar / Navbar ── */
+.navbar {
+  background: var(--primary) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+/* ── Stat Cards on Dashboard ── */
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--card-shadow);
+  border-left: 4px solid var(--accent);
+  transition: transform 0.2s;
+}
+
+.stat-card:hover { transform: translateY(-3px); }
+.stat-card.success { border-left-color: var(--success); }
+.stat-card.warning { border-left-color: var(--warning); }
+.stat-card.danger  { border-left-color: var(--danger);  }
+
+.stat-card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--primary);
+}
+
+.stat-card p {
+  color: #7f8c8d;
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+}
+
+/* ── Table ── */
+.table-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.table thead th {
+  background: var(--primary);
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 14px 16px;
+}
+
+.table tbody tr:hover { background: #f8f9fa; }
+
+/* ── Status Badges ── */
+.badge-draft      { background:#95a5a6; color:white; }
+.badge-confirmed  { background:#3498db; color:white; }
+.badge-received   { background:#27ae60; color:white; }
+.badge-cancelled  { background:#e74c3c; color:white; }
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* ── PO Form ── */
+.form-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  padding: 32px;
+}
+
+.product-row {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #e9ecef;
+  animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from { opacity:0; transform:translateY(-8px); }
+  to   { opacity:1; transform:translateY(0);    }
+}
+
+.remove-row-btn {
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* ── Totals Box ── */
+.totals-box {
+  background: #eaf4fb;
+  border-radius: 10px;
+  padding: 20px 24px;
+  border: 1px solid #aed6f1;
+}
+
+.totals-box .label { color:#5d6d7e; font-size:0.9rem; }
+.totals-box .value { font-weight:700; color:var(--primary); }
+.totals-box .total-final { font-size:1.3rem; color:var(--accent); }
+
+/* ── Auth Page ── */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+}
+
+.auth-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.auth-card h2 {
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ── Loader ── */
+.spinner-overlay {
+  display: none;
+  position:fixed; inset:0;
+  background:rgba(255,255,255,0.7);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+}
