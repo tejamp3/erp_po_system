@@ -13,7 +13,7 @@ A full-stack ERP system for managing Vendors, Products, and Purchase Orders with
 | Frontend | HTML5, Bootstrap 5, Vanilla JS |
 | Auth | JWT (python-jose, passlib) |
 | Notifications | Node.js, Socket.IO |
-| AI | Google Gemini API |
+| AI | Grok API |
 
 ---
 
