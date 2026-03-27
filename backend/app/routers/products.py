@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 import os
-import google.generativeai as genai
+import requests as req
 from dotenv import load_dotenv
 
 from app.database import get_db
@@ -67,7 +67,6 @@ def create_product(
     db: Session = Depends(get_db)
 ):
     try:
-        # Check for duplicate SKU
         existing = db.query(models.Product).filter(
             models.Product.sku == product_data.sku
         ).first()
@@ -171,31 +170,50 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
 @router.post("/ai-description", response_model=schemas.AIDescriptionResponse)
 def generate_ai_description(request: schemas.AIDescriptionRequest):
     try:
-        api_key = os.getenv("GEMINI_API_KEY")
+        api_key = os.getenv("GROQ_API_KEY")
 
-        if not api_key or api_key == "your-gemini-api-key-here":
-            # Fallback if no API key is set yet
+        if not api_key or api_key == "your_groq_key_here":
             return {
                 "description": f"The {request.product_name} is a premium-quality "
                                f"{request.category} product designed for modern businesses. "
                                f"Built to deliver exceptional performance and long-lasting reliability."
             }
 
-        # Configure Gemini
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-pro")
+        url = "https://api.groq.com/openai/v1/chat/completions"
 
-        prompt = (
-            f"Write a professional 2-sentence marketing description for a product "
-            f"called '{request.product_name}' in the '{request.category}' category. "
-            f"Be concise, engaging, and business-focused."
-        )
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
 
-        response = model.generate_content(prompt)
-        return {"description": response.text.strip()}
+        payload = {
+            "model": "llama3-8b-8192",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": (
+                        f"Write a professional 2-sentence marketing description for a product "
+                        f"called '{request.product_name}' in the '{request.category}' category. "
+                        f"Be concise, engaging, and business-focused. No extra text, just the description."
+                    )
+                }
+            ],
+            "max_tokens": 100
+        }
 
+        response = req.post(url, headers=headers, json=payload, timeout=10)
+        data = response.json()
+
+        print("GROQ RESPONSE:", data)
+
+        description = data["choices"][0]["message"]["content"].strip()
+        return {"description": description}
+
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"AI description generation failed: {str(e)}"
-        )
+        return {
+            "description": f"The {request.product_name} is a premium-quality "
+                           f"{request.category} product engineered for modern business needs. "
+                           f"Designed to deliver exceptional performance, reliability, and value."
+        }

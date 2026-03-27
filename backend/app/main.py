@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import engine, Base
-from app.routers import vendors, products, purchase_orders
+from app.routers import vendors, products, purchase_orders, auth, google_auth
 
 # ─────────────────────────────────────────────
 # Create all tables in PostgreSQL automatically
@@ -42,6 +42,7 @@ app.include_router(vendors.router,          prefix="/api/vendors",        tags=[
 app.include_router(products.router,         prefix="/api/products",       tags=["Products"])
 app.include_router(purchase_orders.router,  prefix="/api/purchase-orders",tags=["Purchase Orders"])
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(google_auth.router, prefix="/api/auth", tags=["Google OAuth"])
 # ─────────────────────────────────────────────
 # Root endpoint - just to test if server is up
 # ─────────────────────────────────────────────
